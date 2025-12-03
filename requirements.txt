@@ -10,22 +10,15 @@ streamlit-authenticator==0.3.3
 
 # Database
 sqlalchemy==2.0.35
-psycopg2-binary==2.9.9
+psycopg[binary]>=3.2,<4      # ← pengganti psycopg2-binary
+# hapus baris psycopg2-binary==2.9.9
 
-# PDF Export
+# PDF/Excel
 reportlab==4.2.5
-
-# Excel Export
 openpyxl==3.1.5
 
-# Data Validation
+# Validation/Logging/UI/Perf
 pydantic==2.9.2
-
-# Logging
 loguru==0.7.2
-
-# Enhanced UI
 streamlit-aggrid==1.0.5
-
-# Performance
 redis==5.2.0
