@@ -1,5 +1,5 @@
 
-# Core (WAJIB)
+# Core
 streamlit==1.39.0
 pandas==2.2.2
 plotly==5.24.1
@@ -28,3 +28,4 @@ loguru==0.7.2
 streamlit-aggrid==1.0.5
 
 # Performance
+redis==5.2.0
