@@ -1,24 +1,10 @@
-
-# Core
 streamlit==1.39.0
 pandas==2.2.2
 plotly==5.24.1
 numpy==1.26.4
-
-# Security & Auth
-streamlit-authenticator==0.3.3
-
-# Database
-sqlalchemy==2.0.35
-psycopg[binary]>=3.2,<4      # ← pengganti psycopg2-binary
-# hapus baris psycopg2-binary==2.9.9
-
-# PDF/Excel
-reportlab==4.2.5
-openpyxl==3.1.5
-
-# Validation/Logging/UI/Perf
 pydantic==2.9.2
 loguru==0.7.2
 streamlit-aggrid==1.0.5
 redis==5.2.0
+reportlab==4.2.5
+openpyxl==3.1.5
