@@ -28,6 +28,3 @@ streamlit-aggrid==1.0.5
 
 # Performance
 redis==5.2.0
-```
-
----
