@@ -28,7 +28,7 @@ from typing import Dict, List, Tuple, Any, Optional
 # =============================================================================
 
 st.set_page_config(
-    page_title="TAT DSS v6.0 - AI & Analytics",
+    page_title="TAT DSS v4.0 - AI & Analytics",
     page_icon="🧠",
     layout="wide"
 )
@@ -431,7 +431,7 @@ class TATUI:
 
 def main():
     TATUI.render_css()
-    st.markdown('<div class="main-header">⚖️ TAT DSS v6.0 (AI Edition)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">⚖️ TAT DSS v4.0 (AI Edition)</div>', unsafe_allow_html=True)
     
     if 'analyzed' not in st.session_state:
         st.session_state['analyzed'] = False
