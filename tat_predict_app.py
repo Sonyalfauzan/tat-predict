@@ -24,7 +24,7 @@ from typing import Dict, List, Tuple, Any, Optional
 # =============================================================================
 
 st.set_page_config(
-    page_title="TAT DSS v4.1 - Verified",
+    page_title="TAT DSS v4.1",
     page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded"
