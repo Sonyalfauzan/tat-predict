@@ -1,14 +1,14 @@
 """
 =================================================================================
-SISTEM PENDUKUNG KEPUTUSAN TAT BNN - V4.1 (VERIFIED COMPLIANCE)
+SISTEM PENDUKUNG KEPUTUSAN TAT BNN - V4.1 
 =================================================================================
-VERSI: 4.1.0
+VERSI: 4.1.0 
 
 Status Audit Regulasi (Desember 2025):
-✅ Batas Gramatur (SEMA No. 4/2010 Lampiran) - VERIFIED
-✅ Syarat Urine Positif (SEMA No. 4/2010 Poin 3c) - ADDED
-✅ Kriteria Klinis (Juknis Rehabilitasi BNN 2022) - VERIFIED
-✅ Dual Track System (UU 35/2009 Pasal 103) - VERIFIED
+✅ Batas Gramatur (SEMA No. 4/2010 Lampiran)
+✅ Syarat Urine Positif (SEMA No. 4/2010 Poin 3c) 
+✅ Kriteria Klinis (Juknis Rehabilitasi BNN 2022) 
+✅ Dual Track System (UU 35/2009 Pasal 103) 
 
 =================================================================================
 """
@@ -344,6 +344,68 @@ class TATUI:
             fig.update_traces(fill='toself')
             st.plotly_chart(fig, use_container_width=True)
 
+    @staticmethod
+    def render_report(decision: Dict, inputs: Dict):
+        st.header("🖨️ LAPORAN ASESMEN TERPADU")
+        st.info("Salin teks di bawah ini untuk Berita Acara atau Laporan Resmi.")
+        
+        # Generate Text Report
+        tgl = datetime.now().strftime("%d %B %Y")
+        report_text = f"""
+LAPORAN HASIL ASESMEN TERPADU (TAT)
+BADAN NARKOTIKA NASIONAL
+============================================================
+Tanggal Pemeriksaan : {tgl}
+Nama Terperiksa     : {inputs['nama']}
+Usia                : {inputs['usia']} Tahun
+
+A. DATA HUKUM & BARANG BUKTI
+------------------------------------------------------------
+1. Jenis Narkotika   : {inputs.get('jenis_narkotika', '-')}
+2. Berat Barang Bukti: {inputs['bb_amount']} gram
+   (Batas SEMA No. 4/2010: {inputs['bb_limit']} gram)
+3. Status BB         : {'MELEBIHI BATAS' if inputs['bb_amount'] > inputs['bb_limit'] else 'DI BAWAH BATAS (Memenuhi Syarat)'}
+4. Peran Tersangka   : {inputs['peran']}
+5. Status Residivis  : {'Ya' if inputs['is_residivis'] else 'Tidak'}
+6. Status Urine      : {'Positif' if inputs.get('is_urine_positive', True) else 'Negatif'}
+
+B. DATA KLINIS & MEDIS
+------------------------------------------------------------
+1. Derajat Ketergantungan : {decision['derajat_ketergantungan']}
+2. Diagnosis DSM-5        : {inputs['dsm_count']} Kriteria Terpenuhi
+3. Profil ASAM            :
+   - D1 (Intoksikasi) : {inputs['asam_scores'][1]}
+   - D2 (Biomedis)    : {inputs['asam_scores'][2]}
+   - D3 (Emosional)   : {inputs['asam_scores'][3]}
+   - D4 (Motivasi)    : {inputs['asam_scores'][4]}
+   - D5 (Relapse)     : {inputs['asam_scores'][5]}
+   - D6 (Lingkungan)  : {inputs['asam_scores'][6]}
+
+C. REKOMENDASI TIM ASESMEN TERPADU
+------------------------------------------------------------
+KESIMPULAN:
+>> {decision['rekomendasi']} <<
+
+DASAR PERTIMBANGAN:
+{chr(10).join(['- ' + r for r in decision['alasan']])}
+
+D. CATATAN TAMBAHAN
+------------------------------------------------------------
+Prioritas: {decision.get('urgency', 'Normal Priority')}
+
+============================================================
+Dicetak melalui Sistem Pendukung Keputusan TAT v4.1
+(Alat bantu ini bukan pengganti keputusan klinis/hukum final)
+"""
+        st.text_area("Draft Laporan", report_text, height=400)
+        
+        st.download_button(
+            label="💾 Download Laporan (.txt)",
+            data=report_text,
+            file_name=f"Laporan_TAT_{inputs['nama']}_{tgl}.txt",
+            mime="text/plain"
+        )
+
 # =============================================================================
 # 4. MAIN CONTROLLER
 # =============================================================================
@@ -358,7 +420,7 @@ def main():
         st.session_state['decision'] = {}
         st.session_state['inputs'] = {}
 
-    tab_input, tab_result = st.tabs(["📝 Input Data", "📊 Hasil Analisis"])
+    tab_input, tab_result, tab_report = st.tabs(["📝 Input Data", "📊 Hasil Analisis", "🖨️ Laporan Resmi"])
 
     with tab_input:
         with st.form("tat_form"):
@@ -386,8 +448,12 @@ def main():
                 st.session_state['analyzed'] = True
                 st.session_state['decision'] = decision
                 st.session_state['inputs'] = {
-                    'nama': nama, 'usia': usia, 'bb_amount': bb_amount, 'bb_limit': limit,
-                    'peran': peran, 'is_residivis': residivis, 'asam_scores': asam_scores
+                    'nama': nama, 'usia': usia, 
+                    'jenis_narkotika': jenis_narkotika, # Ditambahkan
+                    'bb_amount': bb_amount, 'bb_limit': limit,
+                    'peran': peran, 'is_residivis': residivis, 
+                    'is_urine_positive': is_urine_pos, # Ditambahkan
+                    'asam_scores': asam_scores, 'dsm_count': dsm_count
                 }
                 st.rerun()
 
@@ -396,6 +462,12 @@ def main():
             TATUI.render_results(st.session_state['decision'], st.session_state['inputs'])
         else:
             st.info("Silakan isi data dan klik Analisis pada tab Input Data.")
+
+    with tab_report:
+        if st.session_state['analyzed']:
+            TATUI.render_report(st.session_state['decision'], st.session_state['inputs'])
+        else:
+            st.info("Laporan akan tersedia setelah analisis dilakukan.")
 
 if __name__ == "__main__":
     main()
