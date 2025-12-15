@@ -226,7 +226,7 @@ class TATUI:
 
     @staticmethod
     def render_header():
-        st.markdown('<div class="main-header">⚖️ TAT DSS v4.1 (Verified)</div>', unsafe_allow_html=True)
+        st.markdown('<div class="main-header">⚖️ TAT DSS v4.1 </div>', unsafe_allow_html=True)
         st.markdown('<div style="text-align: center; color: #64748b;">Sistem Pendukung Keputusan Terverifikasi Regulasi SEMA 4/2010</div>', unsafe_allow_html=True)
         st.warning("⚠️ DISCLAIMER: Sistem ini adalah alat bantu hitung & logika. Keputusan final tetap pada Tim Asesmen Terpadu.")
 
