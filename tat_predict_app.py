@@ -5,11 +5,10 @@ SISTEM PENDUKUNG KEPUTUSAN TAT BNN - V4.1
 VERSI: 4.1.0 
 
 Status Audit Regulasi (Desember 2025):
-✅ Batas Gramatur (SEMA No. 4/2010 Lampiran)
+✅ Batas Gramatur (SEMA No. 4/2010 Lampiran) 
 ✅ Syarat Urine Positif (SEMA No. 4/2010 Poin 3c) 
 ✅ Kriteria Klinis (Juknis Rehabilitasi BNN 2022) 
-✅ Dual Track System (UU 35/2009 Pasal 103) 
-
+✅ Dual Track System (UU 35/2009 Pasal 103)
 =================================================================================
 """
 
@@ -127,7 +126,8 @@ class TATLogicEngine:
         result["derajat_ketergantungan"] = severity
 
         # 1. CEK KEDARURATAN MEDIS (PRIORITAS TERTINGGI - DUTY OF CARE)
-        if suicide_risk >= 4 or asam_scores.get(1, 0) >= 3 or asam_scores.get(2, 0) >= 3:
+        # FIX: Renamed suicide_risk to suicide_risk_level to match argument name
+        if suicide_risk_level >= 4 or asam_scores.get(1, 0) >= 3 or asam_scores.get(2, 0) >= 3:
             result.update({
                 "rekomendasi": "REHABILITASI RAWAT INAP (MEDIS/PSIKIATRIS SEGERA)",
                 "tipe": "Medis", "status_warna": "red", "urgency": "IMMEDIATE",
