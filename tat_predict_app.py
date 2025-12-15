@@ -235,9 +235,9 @@ class TATUI:
         with st.sidebar:
             st.header("✅ Status Regulasi")
             st.caption("Pemeriksaan Kepatuhan:")
-            st.markdown("- **SEMA 4/2010:** AKTIF")
-            st.markdown("- **UU 35/2009:** AKTIF")
-            st.markdown("- **Juknis BNN:** AKTIF")
+            st.markdown("- **SEMA 4/2010:** ")
+            st.markdown("- **UU 35/2009:** ")
+            st.markdown("- **Juknis BNN:** ")
             st.divider()
             st.info("Pastikan dokumen BAP dan Hasil Lab tersedia sebelum memulai.")
 
